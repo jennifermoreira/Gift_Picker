@@ -1532,6 +1532,15 @@
     document.addEventListener("keydown", e => {
       if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "z") { e.preventDefault(); openAdmin(); }
       if (e.key === "Escape") closeAdmin();
+
+      // Logitech R400: right arrow / PageDown = Next button → trigger spin
+      // Only fires when the admin modal is closed and the spin button is enabled.
+      if ((e.key === "ArrowRight" || e.key === "PageDown") &&
+          !$("adminModal").classList.contains("show") &&
+          !$("spinBtn").disabled) {
+        e.preventDefault();
+        $("spinBtn").click();
+      }
     });
 
     $("adminHotspot").addEventListener("click", () => {
