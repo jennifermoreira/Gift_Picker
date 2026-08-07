@@ -888,11 +888,8 @@
           if (!gift.image || gift.image.startsWith("data:image/svg")) {
             gift.image = def.image;
           }
-          // Always restore quantities from defaults so the button is never stuck
-          // disabled due to a previous session exhausting stock.
-          gift.startingQuantity  = def.startingQuantity;
-          gift.remainingQuantity = def.remainingQuantity;
-          gift.active            = def.active;
+          // Restore active state from defaults, but preserve saved quantities.
+          gift.active = def.active;
         });
         return parsed;
       } catch (e) {
@@ -1545,11 +1542,16 @@
           e.preventDefault();
           $("spinBtn").click();
         }
-        // Back (◀) / left arrow / ArrowLeft → Next Participant (dismiss winner overlay)
+        // Back (◀) / left arrow / PageUp → Next Participant (dismiss winner overlay)
         if ((e.key === "ArrowLeft" || e.key === "PageUp") &&
             $("winnerOverlay").classList.contains("show")) {
           e.preventDefault();
           nextParticipant();
+        }
+        // R400 bottom-left screen+play button sends F5 (slideshow mode) — block page refresh
+        if (e.key === "F5") {
+          e.preventDefault();
+          if ($("winnerOverlay").classList.contains("show")) { nextParticipant(); }
         }
       }
     });
