@@ -1531,15 +1531,26 @@
 
     document.addEventListener("keydown", e => {
       if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "z") { e.preventDefault(); openAdmin(); }
-      if (e.key === "Escape") closeAdmin();
 
-      // Logitech R400: right arrow / PageDown = Next button → trigger spin
-      // Only fires when the admin modal is closed and the spin button is enabled.
-      if ((e.key === "ArrowRight" || e.key === "PageDown") &&
-          !$("adminModal").classList.contains("show") &&
-          !$("spinBtn").disabled) {
-        e.preventDefault();
-        $("spinBtn").click();
+      // Escape: close admin if open, otherwise dismiss winner overlay → Next Participant
+      if (e.key === "Escape") {
+        if ($("adminModal").classList.contains("show")) { closeAdmin(); }
+        else if ($("winnerOverlay").classList.contains("show")) { nextParticipant(); }
+      }
+
+      // Logitech R400 — only act when admin modal is closed
+      if (!$("adminModal").classList.contains("show")) {
+        // Next (▶) / right arrow / PageDown → spin
+        if ((e.key === "ArrowRight" || e.key === "PageDown") && !$("spinBtn").disabled) {
+          e.preventDefault();
+          $("spinBtn").click();
+        }
+        // Back (◀) / left arrow / ArrowLeft → Next Participant (dismiss winner overlay)
+        if ((e.key === "ArrowLeft" || e.key === "PageUp") &&
+            $("winnerOverlay").classList.contains("show")) {
+          e.preventDefault();
+          nextParticipant();
+        }
       }
     });
 
