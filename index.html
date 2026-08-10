@@ -577,7 +577,19 @@
       color: var(--text);
       font-size: clamp(18px, 2vw, 28px);
       font-weight: 750;
+      margin-bottom: 10px;
+    }
+
+    .winner-disclaimer {
+      color: var(--muted);
+      font-size: clamp(11px, 1vw, 14px);
+      font-style: italic;
+      opacity: 0.7;
       margin-bottom: 20px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.5;
     }
 
     .confetti {
@@ -697,6 +709,7 @@
         <div class="you-won">You Won</div>
         <div class="winner-image-wrap" id="winnerImageWrap"></div>
         <div class="winner-message">Please collect your gift from our booth representative.</div>
+        <p class="winner-disclaimer">Gift redemption is subject to availability and while stocks last. Alternative gifts may be provided at the discretion of the booth staff.</p>
         <button class="primary" id="nextParticipantBtn">Next Participant</button>
       </div>
     </div>
